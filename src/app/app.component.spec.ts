@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'mysql-editor'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('mysql-editor');
+    expect(app.title).toEqual('MySQL Editor');
   });
 
   it('should render title', () => {
