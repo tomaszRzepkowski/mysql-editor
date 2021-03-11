@@ -9,8 +9,8 @@ export class InfoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getTables(): Observable<any> {
-    return this.httpClient.get('/api/info/tables');
+  getTables(schemaName: string): Observable<any> {
+    return this.httpClient.get('/api/info/tables', {params: {schemaName}});
   }
 
   getSchemas(): Observable<any> {
