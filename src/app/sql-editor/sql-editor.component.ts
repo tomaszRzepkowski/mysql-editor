@@ -17,6 +17,8 @@ export class SqlEditorComponent implements OnInit {
   availableTables: string[];
   outputColumns: string[];
   outputData: object[];
+  currentSchema: string;
+  errorMessages: string = null;
 
   dataLoaded = new BehaviorSubject<boolean>(false);
 
@@ -34,15 +36,16 @@ export class SqlEditorComponent implements OnInit {
    * Executes query
    * @param $event
    */
-  controlEnterPress($event: any): void {
+  controlEnterPress(): void {
     const userEntry = this.editorText.value;
     this.sqlService.executeSQL(userEntry)
       .pipe(finalize(() => this.dataLoaded.next(true)))
       .pipe(catchError((err) => {
       this.dataLoaded.next(false);
+      console.log(err.error.message);
+      this.errorMessages = err.error.message;
       return err;
-    }))
-      .subscribe((response) => {
+    })).subscribe((response) => {
       this.outputColumns = response.columns.slice();
       this.outputData = [];
       // for (let i = 0; i < response.columns.length; i++ ){
@@ -81,6 +84,7 @@ export class SqlEditorComponent implements OnInit {
     const schemaName = $event.value;
     this.infoService.selectSchema(schemaName).subscribe(() => {
       console.log('Schema selected');
+      this.currentSchema = schemaName;
       this.fetchTables(schemaName);
     });
   }
@@ -93,8 +97,9 @@ export class SqlEditorComponent implements OnInit {
   }
 
   resetData(): void {
-    this.outputColumns = [];
-    this.outputData = [];
+    this.outputColumns = null;
+    this.outputData = null;
+    this.errorMessages = null;
     this.dataLoaded.next(false);
   }
 }

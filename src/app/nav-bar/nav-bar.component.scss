@@ -2,3 +2,9 @@
   font-size: var(--font-28px);
   font-weight: 300;
 }
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}

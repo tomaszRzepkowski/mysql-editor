@@ -11,6 +11,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatOptionModule,
     MatTableModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule,
+    MatIconModule
   ]
 })
 export class SqlEditorModule { }

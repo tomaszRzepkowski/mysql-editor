@@ -2,15 +2,40 @@
   .mat-form-field {
     width: 100%;
   }
+  .sql-error-message {
+    font-weight: 600;
+    color: red;
+    padding: 10px 10px;
+  }
 }
 
 .sql-editor-input {
-  width: 100%;
   border-radius: 5px;
-  padding: 10px;
 }
 
 .table-container{
   max-height: 300px;
   overflow-y: auto;
+}
+
+.grid-sql-container {
+  display: grid;
+  grid-template-columns: 300px auto;
+  grid-gap: 10px;
+}
+
+h3 {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+}
+.mat-form-field {
+  width: 100%;
+}
+
+@media screen and (max-width: 700px) {
+  .grid-sql-container {
+    grid-template-columns: auto;
+    grid-gap: 0;
+  }
 }
