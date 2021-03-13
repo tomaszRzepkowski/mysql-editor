@@ -2,13 +2,17 @@
   <div id="explorer">
     <mat-card class="sql-editor-container left-side">
       <mat-card-title>
-        SQL Editor
+        DB Explorer
       </mat-card-title>
       <mat-card-subtitle>
-        This view allows you to execute SQL queries
+        Select schemas and explore tables
       </mat-card-subtitle>
       <mat-card-content>
         <div>
+          <div class="box">
+            Current schema: {{currentSchema}}
+          </div>
+
           <h3>Schemas</h3>
           <mat-divider></mat-divider>
           <mat-form-field>
@@ -28,7 +32,7 @@
               <mat-list-item role="listitem" *ngFor="let table of availableTables">{{table}}</mat-list-item>
             </mat-list>
             <div *ngIf="!availableTables">
-              <h4>No tables available in selected schema</h4>
+              <mat-label>No tables available in selected schema</mat-label>
             </div>
           </div>
 
@@ -41,8 +45,12 @@
     <mat-card class="sql-editor-container">
       <mat-card-title>
         Editor
-        <mat-icon color="primary" class="button-icon" (click)="controlEnterPress();">send</mat-icon>
+        <mat-icon color="primary" class="button-icon" matTooltip="Executes query"
+                  (click)="controlEnterPress();">send</mat-icon>
       </mat-card-title>
+      <mat-card-subtitle>
+        Write and execute SQL
+      </mat-card-subtitle>
       <mat-card-content>
         <mat-form-field>
           <mat-label>SQL Editor</mat-label>
@@ -112,17 +120,21 @@
 <mat-card class="sql-editor-container">
   <mat-card-title>
     Output
-  </mat-card-title>
-  <mat-card-content>
     <button mat-button mat-flat-button color="primary"
             (click)="resetData();" [disabled]="!(dataLoaded | async)">Reset</button>
+
+  </mat-card-title>
+  <mat-card-subtitle>
+    Queries and server output
+  </mat-card-subtitle>
+  <mat-card-content>
 
     <div *ngIf="!!errorMessages">
       <h3>Error message</h3>
       <div class="sql-error-message">{{errorMessages}}</div>
     </div>
 
-    <div [hidden]="!(dataLoaded | async)">
+    <div *ngIf="outputData">
       <mat-table [dataSource]="outputData">
         <ng-container *ngFor="let column of outputColumns" [matColumnDef]="column">
           <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
@@ -131,7 +143,7 @@
         <mat-header-row *matHeaderRowDef="outputColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: outputColumns;"></mat-row>
       </mat-table>
-      <div *ngIf="outputData?.length > 0">
+      <div *ngIf="outputData?.length === 0">
         <h3>No data to display</h3>
       </div>
     </div>

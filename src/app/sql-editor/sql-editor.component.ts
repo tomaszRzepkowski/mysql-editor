@@ -28,7 +28,11 @@ export class SqlEditorComponent implements OnInit {
   ngOnInit(): void {
     this.infoService.getSchemas().subscribe((data) => {
       this.availableSchemas = data.rows.map(dbName => dbName[0]);
-      // console.log(this.availableSchemas);
+    });
+
+    this.infoService.getCurrentSchema().subscribe((data) => {
+      this.currentSchema = data;
+      console.log(this.currentSchema);
     });
   }
 
@@ -40,12 +44,7 @@ export class SqlEditorComponent implements OnInit {
     const userEntry = this.editorText.value;
     this.sqlService.executeSQL(userEntry)
       .pipe(finalize(() => this.dataLoaded.next(true)))
-      .pipe(catchError((err) => {
-      this.dataLoaded.next(false);
-      console.log(err.error.message);
-      this.errorMessages = err.error.message;
-      return err;
-    })).subscribe((response) => {
+      .subscribe((response) => {
       this.outputColumns = response.columns.slice();
       this.outputData = [];
       // for (let i = 0; i < response.columns.length; i++ ){
@@ -76,7 +75,11 @@ export class SqlEditorComponent implements OnInit {
       }
       console.log(this.outputColumns);
       console.log(this.outputData);
-    });
+    }, (err) => {
+        this.resetData();
+        this.errorMessages = err.error.message;
+        return [err.error.message];
+      });
   }
 
   selectSchema($event: MatSelectChange): void {

@@ -8,8 +8,10 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
 }
 
 .content-wrapper {
-  margin: 20px 20px 0 20px;
-  padding-bottom: 10px;
+  padding: 10px 10px 0 10px;
+  margin: 5px 5px 0 5px;
+  //margin: 20px 20px 0 20px;
+  //padding-bottom: 10px;
   overflow-x: hidden;
   overflow-y: auto;
   .mat-card {
@@ -23,6 +25,15 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
   .mat-icon{
     cursor: default;
     margin: 0 3px;
+    font-size: 1.5rem;
+  }
+
+  .mat-button-base {
+    margin: 5px 0;
+  }
+
+  .mat-card {
+    padding: 12px;
   }
 
   .button-icon {
@@ -31,6 +42,28 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
     &:hover {
       text-shadow: 0 1px 3px grey;
     }
+  }
+
+  .mat-list-base {
+    .mat-list-item {
+      height: 32px;
+      font-size: 1rem;
+      transition: text-shadow 100ms;
+      cursor: default;
+      &:hover {
+        text-shadow: 0 1px 1px grey;
+      }
+      .mat-list-item-content {
+        padding-left: 0;
+      }
+    }
+  }
+  .box {
+    padding: 5px 10px;
+    border: 1px solid #72727266;
+    border-radius: 5px;
+    // mat-elevation-z2
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
   }
 }
 
