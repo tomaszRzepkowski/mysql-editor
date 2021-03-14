@@ -1,7 +1,25 @@
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Montserrat, sans-serif'
+);
+@include mat-core();
+
+$colors-primary: mat-palette($mat-blue);
+$colors-accent:  mat-palette($mat-orange);
+
+// include the custom theme components into a theme object
+$sql-theme: mat-light-theme($colors-primary, $colors-accent);
+
+// include the custom theme object into the angular material theme
+@include angular-material-theme($sql-theme);
+@include angular-material-typography($custom-typography);
+
+
 html {font-size: 14px !important;}
 
 html, body { height: 100%; }
-body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-serif; }
+body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-serif !important; }
 
 .padded {
   padding: 10px 15px;

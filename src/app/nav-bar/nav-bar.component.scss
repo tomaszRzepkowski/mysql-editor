@@ -1,6 +1,7 @@
 .app-title {
   font-size: var(--font-28px);
   font-weight: 300;
+  text-shadow: 1px 2px 3px #ffffff;
 }
 
 .button-container {
@@ -10,4 +11,9 @@
   .mat-button-base {
     margin: 0 5px;
   }
+}
+
+.link-active {
+  //border: 3px solid #b5004b;
+  background-color: lightgrey;
 }

@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title>Connect to Database [UNDER CONSTRUCTION]</mat-card-title>
+  <mat-card-title>Connect to Database</mat-card-title>
   <mat-card-subtitle>This view allows you to establish connection to MySQL Server</mat-card-subtitle>
   <mat-card-content>
     <h3>Provide information</h3>
@@ -13,24 +13,28 @@
         <mat-label>DB Host</mat-label>
         <input matInput type="text" autocomplete="off" [formControl]="form.host"/>
         <mat-icon color="primary" matTooltip="Provide host name" matSuffix>info</mat-icon>
+        <mat-error *ngIf="form.host.hasError('required')">Host name is required</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>DB Port</mat-label>
         <input matInput type="number" autocomplete="off" [formControl]="form.port"/>
         <mat-icon color="primary" matTooltip="Provide port number" matSuffix>info</mat-icon>
+        <mat-error *ngIf="form.host.hasError('required')">Port is required</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>DB Username</mat-label>
         <input matInput type="text" autocomplete="off" [formControl]="form.username"/>
         <mat-icon color="primary" matTooltip="Provide username to DB" matSuffix>info</mat-icon>
+        <mat-error *ngIf="form.host.hasError('required')">Username is required</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>DB Username Password</mat-label>
         <input matInput type="password" autocomplete="off" [formControl]="form.password"/>
         <mat-icon color="primary" matTooltip="Provide password for above username" matSuffix>info</mat-icon>
+        <mat-error *ngIf="form.host.hasError('required')">Password is required</mat-error>
       </mat-form-field>
 
       <button mat-raised-button color="primary" (click)="fillTestConnectionData();">Fill test data</button>

@@ -5,7 +5,12 @@ Część interfejsu użytkownika aplikacji do projektu magisterskiego
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
 
 ##TODO
-DODAJ ZARZĄDZANIE UŻYTKOWNIKAMI ROLAMI GRANTSY ITD
+* Połączenie do DB z poziomu GUI
+* Zarządzanie użytkownikami
+* Zarządzanie rolami
+* Zarządzanie tabelami 
+* Wyświetlanie trigery funkcje procedury itp
+* Komponent podświetlanie składni SQL parser lub coś w podobie
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
