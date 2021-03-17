@@ -4,7 +4,8 @@ import {SqlService} from '../services/sql.service';
 import {InfoService} from '../services/info.service';
 import {MatSelectChange} from '@angular/material/select';
 import {BehaviorSubject} from 'rxjs';
-import {catchError, finalize} from 'rxjs/operators';
+import {finalize} from 'rxjs/operators';
+import {DataAndRows} from '../model/DataAndRows';
 
 @Component({
   selector: 'app-sql-editor',
@@ -26,7 +27,7 @@ export class SqlEditorComponent implements OnInit {
               private infoService: InfoService) { }
 
   ngOnInit(): void {
-    this.infoService.getSchemas().subscribe((data) => {
+    this.infoService.getSchemas().subscribe((data: DataAndRows) => {
       this.availableSchemas = data.rows.map(dbName => dbName[0]);
     });
 
@@ -93,7 +94,7 @@ export class SqlEditorComponent implements OnInit {
   }
 
   private fetchTables(schemaName: string): void {
-    this.infoService.getTables(schemaName).subscribe((data) => {
+    this.infoService.getTables(schemaName).subscribe((data: DataAndRows) => {
       console.log(data.rows);
       this.availableTables = data.rows;
     });

@@ -134,22 +134,25 @@
       <div class="sql-error-message">{{errorMessages}}</div>
     </div>
 
-    <div *ngIf="outputData">
-      <mat-table [dataSource]="outputData">
-        <ng-container *ngFor="let column of outputColumns" [matColumnDef]="column">
-          <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{element[column]}}</mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="outputColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: outputColumns;"></mat-row>
-      </mat-table>
-      <div *ngIf="outputData?.length === 0">
-        <h3>No data to display</h3>
-      </div>
-    </div>
-    <div [hidden]="dataLoaded | async">
-      <h3>No data to display</h3>
-    </div>
+<!--    <div *ngIf="outputData">-->
+<!--      <mat-table [dataSource]="outputData">-->
+<!--        <ng-container *ngFor="let column of outputColumns" [matColumnDef]="column">-->
+<!--          <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>-->
+<!--          <mat-cell *matCellDef="let element">{{element[column]}}</mat-cell>-->
+<!--        </ng-container>-->
+<!--        <mat-header-row *matHeaderRowDef="outputColumns"></mat-header-row>-->
+<!--        <mat-row *matRowDef="let row; columns: outputColumns;"></mat-row>-->
+<!--      </mat-table>-->
+<!--      <div *ngIf="outputData?.length === 0">-->
+<!--        <h3>No data to display</h3>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div [hidden]="dataLoaded | async">-->
+<!--      <h3>No data to display</h3>-->
+<!--    </div>-->
+    <app-sql-output-table [outputData]="outputData"
+                          [outputColumns]="outputColumns"
+                          [dataLoaded]="dataLoaded"></app-sql-output-table>
   </mat-card-content>
 </mat-card>
 
