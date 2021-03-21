@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../services/users.service';
-import {DataAndRows} from '../model/DataAndRows';
+import {ColumnsAndRows} from '../model/ColumnsAndRows';
 import {BehaviorSubject} from 'rxjs';
 
 @Component({
@@ -9,33 +9,17 @@ import {BehaviorSubject} from 'rxjs';
   styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent implements OnInit {
-  usersColumns: string[];
-  usersData: object[];
-  // usersData: DataAndRows;
-  dataLoaded = new BehaviorSubject<boolean>(false);
+  // usersColumns: string[];
+  // usersData: object[];
+  usersData: ColumnsAndRows;
+  dataLoaded = new BehaviorSubject<ColumnsAndRows>(null);
 
   constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
-    this.usersService.getUsers().subscribe((data: DataAndRows) => {
-      // this.usersColumns = data.columns;
-      // this.usersData = data.rows;
-      // this.usersData = new DataAndRows();
-      this.usersColumns = data.columns;
-      this.usersData = data.rows;
-      this.dataLoaded.next(true);
-      console.log(data);
-    });
-  }
-
-  clik(): void {
-    this.usersService.getUsers().subscribe((data: DataAndRows) => {
-      // this.usersColumns = data.columns;
-      // this.usersData = data.rows;
-      // this.usersData = new DataAndRows();
-      this.usersColumns = data.columns;
-      this.usersData = data.rows;
-      this.dataLoaded.next(true);
+    this.usersService.getUsers().subscribe((data: ColumnsAndRows) => {
+      this.usersData = data;
+      this.dataLoaded.next(data);
       console.log(data);
     });
   }

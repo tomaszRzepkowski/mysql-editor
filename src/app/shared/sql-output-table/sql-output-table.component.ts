@@ -1,6 +1,7 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {DataAndRows} from '../../model/DataAndRows';
+import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {ColumnsAndRows} from '../../model/ColumnsAndRows';
+import {ResponseMapper} from '../response-mapper';
 
 @Component({
   selector: 'app-sql-output-table',
@@ -10,18 +11,25 @@ import {DataAndRows} from '../../model/DataAndRows';
 export class SqlOutputTableComponent implements OnInit {
   @Input() outputData: any[];
   @Input() outputColumns: any[];
-  @Input() dataAndRows: DataAndRows;
-  @Input() dataLoaded: Observable<boolean>;
+  @Input() columnsAndRows: ColumnsAndRows;
+  @Input() dataLoaded: Subject<any>;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.dataAndRows);
-    console.log(this.outputColumns);
-    console.log(this.outputData);
-    if (this.dataAndRows) {
-      this.outputData = this.dataAndRows.rows;
-      this.outputColumns = this.dataAndRows.columns;
+    this.dataLoaded.subscribe(data => {
+      if (data) {
+        this.columnsAndRows = data;
+        this.updateTableData();
+      }
+    });
+  }
+
+  private updateTableData(): void {
+    console.log(this.columnsAndRows);
+    if (this.columnsAndRows) {
+      this.outputColumns = this.columnsAndRows.columns;
+      this.outputData = ResponseMapper.remapAsObjectArray(this.columnsAndRows);
     }
   }
 

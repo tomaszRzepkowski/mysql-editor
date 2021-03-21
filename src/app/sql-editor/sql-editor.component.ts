@@ -5,7 +5,8 @@ import {InfoService} from '../services/info.service';
 import {MatSelectChange} from '@angular/material/select';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
-import {DataAndRows} from '../model/DataAndRows';
+import {ColumnsAndRows} from '../model/ColumnsAndRows';
+import {ResponseMapper} from '../shared/response-mapper';
 
 @Component({
   selector: 'app-sql-editor',
@@ -27,7 +28,7 @@ export class SqlEditorComponent implements OnInit {
               private infoService: InfoService) { }
 
   ngOnInit(): void {
-    this.infoService.getSchemas().subscribe((data: DataAndRows) => {
+    this.infoService.getSchemas().subscribe((data: ColumnsAndRows) => {
       this.availableSchemas = data.rows.map(dbName => dbName[0]);
     });
 
@@ -39,41 +40,14 @@ export class SqlEditorComponent implements OnInit {
 
   /**
    * Executes query
-   * @param $event
    */
   controlEnterPress(): void {
     const userEntry = this.editorText.value;
     this.sqlService.executeSQL(userEntry)
       .pipe(finalize(() => this.dataLoaded.next(true)))
-      .subscribe((response) => {
+      .subscribe((response: ColumnsAndRows) => {
       this.outputColumns = response.columns.slice();
-      this.outputData = [];
-      // for (let i = 0; i < response.columns.length; i++ ){
-      //   const columnName = response.columns[i];
-      //   console.log(columnName);
-      //   for (const row of response.rows) {
-      //     const rowElement = row[i];
-      //     console.log(rowElement);
-      //     obj[columnName] = rowElement;
-      //   }
-      //   this.outputData.push(obj);
-      // }
-      // console.log(obj);
-
-      for (const row of response.rows) {
-        const rowElement = row;
-        const singleObject = {};
-        for (let i = 0; i < rowElement.length; i++ ) {
-          const columnName = response.columns[i];
-          const columnValue = rowElement[i];
-          console.log(response.columns[i]);
-          console.log(rowElement[i]);
-          singleObject[columnName] = columnValue;
-        }
-        this.outputData.push(singleObject);
-        // console.log(rowElement);
-        // obj[columnName] = rowElement;
-      }
+      this.outputData = ResponseMapper.remapAsObjectArray(response);
       console.log(this.outputColumns);
       console.log(this.outputData);
     }, (err) => {
@@ -94,7 +68,7 @@ export class SqlEditorComponent implements OnInit {
   }
 
   private fetchTables(schemaName: string): void {
-    this.infoService.getTables(schemaName).subscribe((data: DataAndRows) => {
+    this.infoService.getTables(schemaName).subscribe((data: ColumnsAndRows) => {
       console.log(data.rows);
       this.availableTables = data.rows;
     });
