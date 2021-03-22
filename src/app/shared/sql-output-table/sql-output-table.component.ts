@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {ColumnsAndRows} from '../../model/ColumnsAndRows';
 import {ResponseMapper} from '../response-mapper';
@@ -13,6 +13,7 @@ export class SqlOutputTableComponent implements OnInit {
   @Input() outputColumns: any[];
   @Input() columnsAndRows: ColumnsAndRows;
   @Input() dataLoaded: Subject<any>;
+  @Output() rowClick: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -33,4 +34,9 @@ export class SqlOutputTableComponent implements OnInit {
     }
   }
 
+  onRowClick(row): void {
+    this.rowClick.emit(row);
+  }
+
+  // todo login name password auth type account limits robić pod workbench
 }

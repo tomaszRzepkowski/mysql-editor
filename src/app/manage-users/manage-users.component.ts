@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UsersService} from '../services/users.service';
 import {ColumnsAndRows} from '../model/ColumnsAndRows';
 import {BehaviorSubject} from 'rxjs';
+import {UserDetailsComponent} from '../user-details/user-details.component';
 
 @Component({
   selector: 'app-manage-users',
@@ -13,6 +14,9 @@ export class ManageUsersComponent implements OnInit {
   // usersData: object[];
   usersData: ColumnsAndRows;
   dataLoaded = new BehaviorSubject<ColumnsAndRows>(null);
+  selectedUser: string;
+
+  @ViewChild('userDetailsComponent') userDetailsComponent: UserDetailsComponent;
 
   constructor(private usersService: UsersService) { }
 
@@ -22,5 +26,11 @@ export class ManageUsersComponent implements OnInit {
       this.dataLoaded.next(data);
       console.log(data);
     });
+  }
+
+  selectUser(event: any): void {
+    console.log(event);
+    this.selectedUser = event.user;
+    this.userDetailsComponent.fetchUserDetails(this.selectedUser);
   }
 }

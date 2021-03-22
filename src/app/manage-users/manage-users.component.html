@@ -1,5 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <app-sql-output-table [columnsAndRows]="usersData" [dataLoaded]="dataLoaded"></app-sql-output-table>
+    <app-sql-output-table [columnsAndRows]="usersData" [dataLoaded]="dataLoaded" (rowClick)="selectUser($event);"></app-sql-output-table>
   </mat-card-content>
+  <app-user-details #userDetailsComponent [selectedUser]="selectedUser"></app-user-details>
 </mat-card>

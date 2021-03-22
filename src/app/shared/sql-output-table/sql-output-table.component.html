@@ -5,7 +5,7 @@
       <mat-cell *matCellDef="let element">{{element[column]}}</mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="outputColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: outputColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: outputColumns;" (click)="onRowClick(row);"></mat-row>
   </mat-table>
   <div *ngIf="outputData?.length === 0">
     <h3>No data to display</h3>
