@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormArray, FormControl, Validators} from '@angular/forms';
 import {UsersService} from '../services/users.service';
 import {DBUserData} from '../model/DBUserData';
 
@@ -18,8 +18,29 @@ export class UserDetailsComponent implements OnInit {
   }
 
   private applyDataToForm(userData: DBUserData): void {
-    this.form.username.setValue(userData.username);
     this.form.host.setValue(userData.host);
+    this.form.username.setValue(userData.username);
+    this.form.lastPasswordChange.setValue(userData.lastPasswordChange);
+    this.form.accountLocked.setValue(userData.accountLocked);
+    this.form.selectPrivilege.setValue(userData.selectPrivilege);
+    this.form.insertPrivilege.setValue(userData.insertPrivilege);
+    this.form.updatePrivilege.setValue(userData.updatePrivilege);
+    this.form.deletePrivilege.setValue(userData.deletePrivilege);
+    this.form.createPrivilege.setValue(userData.createPrivilege);
+    this.form.dropPrivilege.setValue(userData.dropPrivilege);
+    this.form.reloadPrivilege.setValue(userData.reloadPrivilege);
+    this.form.shutdownPrivilege.setValue(userData.shutdownPrivilege);
+    this.form.grantPrivilege.setValue(userData.grantPrivilege);
+    this.form.indexPrivilege.setValue(userData.indexPrivilege);
+    this.form.alterPrivilege.setValue(userData.alterPrivilege);
+    this.form.showDbPrivilege.setValue(userData.showDbPrivilege);
+    this.form.executePrivilege.setValue(userData.executePrivilege);
+    this.form.triggerPrivilege.setValue(userData.triggerPrivilege);
+    this.form.dropRolePrivilege.setValue(userData.dropRolePrivilege);
+    this.form.createTablespacePrivilege.setValue(userData.createTablespacePrivilege);
+    this.form.createRolePrivilege.setValue(userData.createRolePrivilege);
+    this.form.createUserPrivilege.setValue(userData.createUserPrivilege);
+    this.form.eventPrivilege.setValue(userData.eventPrivilege);
   }
 
   fetchUserDetails(selectedUser?: string): void {
@@ -30,6 +51,81 @@ export class UserDetailsComponent implements OnInit {
 }
 
 export class UserForm {
-  username = new FormControl();
-  host = new FormControl();
+  host = new FormControl(null, Validators.required);
+  username = new FormControl(null, Validators.required);
+  lastPasswordChange = new FormControl(null, Validators.required);
+  accountLocked = new FormControl(null, Validators.required);
+  selectPrivilege = new FormControl(null, Validators.required);
+  insertPrivilege = new FormControl(null, Validators.required);
+  updatePrivilege = new FormControl(null, Validators.required);
+  deletePrivilege = new FormControl(null, Validators.required);
+  createPrivilege = new FormControl(null, Validators.required);
+  dropPrivilege = new FormControl(null, Validators.required);
+  reloadPrivilege = new FormControl(null, Validators.required);
+  shutdownPrivilege = new FormControl(null, Validators.required);
+  grantPrivilege = new FormControl(null, Validators.required);
+  indexPrivilege = new FormControl(null, Validators.required);
+  alterPrivilege = new FormControl(null, Validators.required);
+  showDbPrivilege = new FormControl(null, Validators.required);
+  executePrivilege = new FormControl(null, Validators.required);
+  triggerPrivilege = new FormControl(null, Validators.required);
+  dropRolePrivilege = new FormControl(null, Validators.required);
+  createTablespacePrivilege = new FormControl(null, Validators.required);
+  createRolePrivilege = new FormControl(null, Validators.required);
+  createUserPrivilege = new FormControl(null, Validators.required);
+  eventPrivilege = new FormControl(null, Validators.required);
+
+  group = new FormArray([
+    this.accountLocked,
+    this.selectPrivilege,
+    this.insertPrivilege,
+    this.updatePrivilege,
+    this.deletePrivilege,
+    this.createPrivilege,
+    this.dropPrivilege,
+    this.reloadPrivilege,
+    this.shutdownPrivilege,
+    this.grantPrivilege,
+    this.indexPrivilege,
+    this.alterPrivilege,
+    this.showDbPrivilege,
+    this.executePrivilege,
+    this.triggerPrivilege,
+    this.dropRolePrivilege,
+    this.createTablespacePrivilege,
+    this.createRolePrivilege,
+    this.createUserPrivilege,
+    this.eventPrivilege,
+  ]);
+
+  labels = [
+    'accountLocked',
+    'selectPrivilege',
+    'insertPrivilege',
+    'updatePrivilege',
+    'deletePrivilege',
+    'createPrivilege',
+    'dropPrivilege',
+    'reloadPrivilege',
+    'shutdownPrivilege',
+    'grantPrivilege',
+    'indexPrivilege',
+    'alterPrivilege',
+    'showDbPrivilege',
+    'executePrivilege',
+    'triggerPrivilege',
+    'dropRolePrivilege',
+    'createTablespacePrivilege',
+    'createRolePrivilege',
+    'createUserPrivilege',
+    'eventPrivilege',
+  ];
+
+  get controls(): any {
+    return this.group.controls;
+  }
+
+  label(n: number): string {
+    return this.labels[n];
+  }
 }

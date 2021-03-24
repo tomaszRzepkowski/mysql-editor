@@ -8,4 +8,34 @@
     <input matInput placeholder="enter host" [formControl]="form.host">
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Last Password Change</mat-label>
+    <input matInput placeholder="enter host" [formControl]="form.lastPasswordChange" readonly>
+  </mat-form-field>
+<!--<div *ngFor="let control of form.controls; let n = index">-->
+  <ng-container *ngFor="let control of form.controls; let n = index"
+                [ngTemplateOutlet]="customSelectField"
+                [ngTemplateOutletContext]="{control: control, label: form.label(n) }"></ng-container>
+<!--</div>-->
+
+<!--  <ng-container [ngTemplateOutlet]="customFormField" [ngTemplateOutletContext]="{control: form.host, label: 'Host'}"></ng-container>-->
 </div>
+
+<ng-template #customFormField let-formControl="control" let-label="label">
+  <mat-form-field>
+    <mat-label>{{label}}</mat-label>
+    <input matInput [placeholder]="'Enter ' + label" [formControl]="formControl" maxlength="256">
+    <mat-error *ngIf="formControl.hasError('required')">Field is required</mat-error>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #customSelectField let-formControl="control" let-label="label">
+  <mat-form-field>
+    <mat-label>{{label}}</mat-label>
+    <mat-select [placeholder]="'Enter ' + label" [formControl]="formControl" maxlength="256">
+      <mat-option value="Y">Yes</mat-option>
+      <mat-option value="N">No</mat-option>
+    </mat-select>
+    <mat-error *ngIf="formControl.hasError('required')">Field is required</mat-error>
+  </mat-form-field>
+</ng-template>

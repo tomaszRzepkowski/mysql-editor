@@ -5,6 +5,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -13,12 +14,13 @@ import {ReactiveFormsModule} from '@angular/forms';
   exports: [
     UserDetailsComponent
   ],
-  imports: [
-    CommonModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        MatListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatSelectModule
+    ]
 })
 export class UserDetailsModule { }

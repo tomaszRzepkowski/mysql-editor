@@ -62,6 +62,10 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
     }
   }
 
+  .mat-form-field {
+    margin: 0 5px;
+  }
+
   .mat-list-base {
     .mat-list-item {
       height: 32px;

@@ -1,0 +1,7 @@
+.mat-row {
+  &:hover {
+    cursor: pointer;
+    background-color: #e0e0e0;
+    text-shadow: 0 0 1px #505050;
+  }
+}
