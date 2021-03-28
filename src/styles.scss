@@ -5,8 +5,73 @@ $custom-typography: mat-typography-config(
 );
 @include mat-core();
 
+$primary: (
+  50 : #e4eef4,
+  100 : #bdd5e4,
+  200 : #91bad2,
+  300 : #649ec0,
+  400 : #4389b3,
+  500 : #2274a5,
+  600 : #1e6c9d,
+  700 : #196193,
+  800 : #14578a,
+  900 : #0c4479,
+  A100 : #aad2ff,
+  A200 : #77b7ff,
+  A400 : #449cff,
+  A700 : #2a8eff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: black,
+  )
+);
+
+$accent: (
+  50 : #ecfcff,
+  100 : #d0f8ff,
+  200 : #b0f4ff,
+  300 : #90f0ff,
+  400 : #79ecff,
+  500 : #61e9ff,
+  600 : #59e6ff,
+  700 : #4fe3ff,
+  800 : #45dfff,
+  900 : #33d9ff,
+  A100 : #ffffff,
+  A200 : #ffffff,
+  A400 : #def8ff,
+  A700 : #c4f3ff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: black,
+  )
+);
 $colors-primary: mat-palette($mat-blue);
-$colors-accent:  mat-palette($mat-orange);
+$colors-accent:  mat-palette($mat-blue-gray);
 
 // include the custom theme components into a theme object
 $sql-theme: mat-light-theme($colors-primary, $colors-accent);

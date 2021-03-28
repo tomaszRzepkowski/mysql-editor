@@ -3,6 +3,7 @@ import {UsersService} from '../services/users.service';
 import {ColumnsAndRows} from '../model/ColumnsAndRows';
 import {BehaviorSubject} from 'rxjs';
 import {UserDetailsComponent} from '../user-details/user-details.component';
+import {NewUserComponent} from '../user-details/new-user/new-user.component';
 
 @Component({
   selector: 'app-manage-users',
@@ -10,13 +11,13 @@ import {UserDetailsComponent} from '../user-details/user-details.component';
   styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent implements OnInit {
-  // usersColumns: string[];
-  // usersData: object[];
   usersData: ColumnsAndRows;
   dataLoaded = new BehaviorSubject<ColumnsAndRows>(null);
   selectedUser: string;
+  newUser = false;
 
   @ViewChild('userDetailsComponent') userDetailsComponent: UserDetailsComponent;
+  @ViewChild('newUserComponent') newUserComponent: NewUserComponent;
 
   constructor(private usersService: UsersService) { }
 
@@ -32,5 +33,9 @@ export class ManageUsersComponent implements OnInit {
     console.log(event);
     this.selectedUser = event.user;
     this.userDetailsComponent.fetchUserDetails(this.selectedUser);
+  }
+
+  createUser(): void {
+    this.newUser = true;
   }
 }

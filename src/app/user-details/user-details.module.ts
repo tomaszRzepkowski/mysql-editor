@@ -6,13 +6,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import { NewUserComponent } from './new-user/new-user.component';
 
 
 
 @NgModule({
-  declarations: [UserDetailsComponent],
+  declarations: [UserDetailsComponent, NewUserComponent],
   exports: [
-    UserDetailsComponent
+    UserDetailsComponent, NewUserComponent
   ],
     imports: [
         CommonModule,
@@ -20,7 +22,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
-        MatSelectModule
+        MatSelectModule,
+        MatButtonModule
     ]
 })
 export class UserDetailsModule { }

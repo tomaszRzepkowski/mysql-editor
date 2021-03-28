@@ -1,4 +1,5 @@
 export class DBUserData {
+  password: string;
   username: string;
   host: string;
   lastPasswordChange: string;

@@ -9,8 +9,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDividerModule} from '@angular/material/divider';
-import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions} from '@angular/material/tooltip';
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
+import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions, MatTooltipModule} from '@angular/material/tooltip';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/material/snack-bar';
 
 export const tooltipOptions: MatTooltipDefaultOptions = {
   showDelay: 100,
@@ -23,15 +23,17 @@ export const tooltipOptions: MatTooltipDefaultOptions = {
     AppComponent,
     NavBarComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatToolbarModule,
-    HttpClientModule,
-    MatDividerModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatToolbarModule,
+        HttpClientModule,
+        MatDividerModule,
+        MatTooltipModule,
+      MatSnackBarModule
+    ],
   providers: [
     {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: tooltipOptions},
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000}}

@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!!selectedUser">
   <mat-form-field>
     <mat-label>Username</mat-label>
     <input matInput placeholder="enter name" [formControl]="form.username">
@@ -8,10 +8,12 @@
     <input matInput placeholder="enter host" [formControl]="form.host">
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field *ngIf="form.lastPasswordChange.value">
     <mat-label>Last Password Change</mat-label>
-    <input matInput placeholder="enter host" [formControl]="form.lastPasswordChange" readonly>
+    <input matInput placeholder="enter host" [formControl]="form.lastPasswordChange"
+           readonly>
   </mat-form-field>
+
 <!--<div *ngFor="let control of form.controls; let n = index">-->
   <ng-container *ngFor="let control of form.controls; let n = index"
                 [ngTemplateOutlet]="customSelectField"
@@ -20,6 +22,7 @@
 
 <!--  <ng-container [ngTemplateOutlet]="customFormField" [ngTemplateOutletContext]="{control: form.host, label: 'Host'}"></ng-container>-->
 </div>
+<button (click)="updateUser()" mat-flat-button color="primary">Update user</button>
 
 <ng-template #customFormField let-formControl="control" let-label="label">
   <mat-form-field>

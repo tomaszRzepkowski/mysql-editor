@@ -18,4 +18,12 @@ export class UsersService {
   getUserData(username: string): Observable<any> {
     return this.httpClient.get<DBUserData>('/api/users/info', {params: {username}});
   }
+
+  updateUser(dbUserData: DBUserData): Observable<DBUserData> {
+    return this.httpClient.put<DBUserData>('/api/users', dbUserData);
+  }
+
+  createUser(dbUserData: DBUserData): Observable<DBUserData> {
+    return this.httpClient.post<DBUserData>('/api/users', dbUserData);
+  }
 }

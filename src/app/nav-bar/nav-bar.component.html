@@ -2,6 +2,8 @@
   <span class="app-title">MySQL Editor</span>
   <span class="fill-available-space"></span>
   <div class="button-container">
+    <button mat-raised-button routerLinkActive="link-active" color="accent" [disabled]="canAutoConnect"
+            matTooltip="This action will try to connect to DB that was connected last time" (click)="autoConnect();">AutoConnect</button>
     <button mat-raised-button routerLinkActive="link-active" color="accent" routerLink="/connect">Connect to DB</button>
     <button mat-raised-button routerLinkActive="link-active" color="accent" routerLink="/manage">Manage DB</button>
     <button mat-raised-button routerLinkActive="link-active" color="accent" routerLink="/users">Manage users</button>

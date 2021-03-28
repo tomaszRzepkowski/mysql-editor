@@ -14,7 +14,18 @@ export class UserDetailsComponent implements OnInit {
   constructor(private userService: UsersService) { }
 
   ngOnInit(): void {
+  }
 
+  fetchUserDetails(selectedUser?: string): void {
+    this.userService.getUserData(selectedUser).subscribe((userData: DBUserData) => {
+      this.applyDataToForm(userData);
+    });
+  }
+
+  updateUser(): void {
+    this.userService.updateUser(this.form.convertToModel()).subscribe((response) => {
+      console.log(response);
+    });
   }
 
   private applyDataToForm(userData: DBUserData): void {
@@ -42,18 +53,12 @@ export class UserDetailsComponent implements OnInit {
     this.form.createUserPrivilege.setValue(userData.createUserPrivilege);
     this.form.eventPrivilege.setValue(userData.eventPrivilege);
   }
-
-  fetchUserDetails(selectedUser?: string): void {
-    this.userService.getUserData(selectedUser).subscribe((userData: DBUserData) => {
-      this.applyDataToForm(userData);
-    });
-  }
 }
 
 export class UserForm {
   host = new FormControl(null, Validators.required);
   username = new FormControl(null, Validators.required);
-  lastPasswordChange = new FormControl(null, Validators.required);
+  lastPasswordChange = new FormControl(null);
   accountLocked = new FormControl(null, Validators.required);
   selectPrivilege = new FormControl(null, Validators.required);
   insertPrivilege = new FormControl(null, Validators.required);
@@ -128,4 +133,33 @@ export class UserForm {
   label(n: number): string {
     return this.labels[n];
   }
+
+  convertToModel(): DBUserData {
+    const data = new DBUserData();
+    data.host = this.host.value;
+    data.username = this.username.value;
+    data.lastPasswordChange = this.lastPasswordChange.value;
+    data.accountLocked = this.accountLocked.value;
+    data.selectPrivilege = this.selectPrivilege.value;
+    data.insertPrivilege = this.insertPrivilege.value;
+    data.updatePrivilege = this.updatePrivilege.value;
+    data.deletePrivilege = this.deletePrivilege.value;
+    data.createPrivilege = this.createPrivilege.value;
+    data.dropPrivilege = this.dropPrivilege.value;
+    data.reloadPrivilege = this.reloadPrivilege.value;
+    data.shutdownPrivilege = this.shutdownPrivilege.value;
+    data.grantPrivilege = this.grantPrivilege.value;
+    data.indexPrivilege = this.indexPrivilege.value;
+    data.alterPrivilege = this.alterPrivilege.value;
+    data.showDbPrivilege = this.showDbPrivilege.value;
+    data.executePrivilege = this.executePrivilege.value;
+    data.triggerPrivilege = this.triggerPrivilege.value;
+    data.dropRolePrivilege = this.dropRolePrivilege.value;
+    data.createTablespacePrivilege = this.createTablespacePrivilege.value;
+    data.createRolePrivilege = this.createRolePrivilege.value;
+    data.createUserPrivilege = this.createUserPrivilege.value;
+    data.eventPrivilege = this.eventPrivilege.value;
+    return data;
+  }
+
 }
