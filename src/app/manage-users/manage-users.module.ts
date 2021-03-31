@@ -7,6 +7,10 @@ import {MatCardModule} from '@angular/material/card';
 import {UserDetailsModule} from '../user-details/user-details.module';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -19,7 +23,11 @@ import {MatButtonModule} from '@angular/material/button';
     MatCardModule,
     UserDetailsModule,
     MatDividerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule
   ]
 })
 export class ManageUsersModule { }

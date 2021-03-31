@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormControl, Validators} from '@angular/forms';
 import {UsersService} from '../services/users.service';
 import {DBUserData} from '../model/DBUserData';
+import {EventEmitter} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-details',
@@ -11,7 +13,9 @@ import {DBUserData} from '../model/DBUserData';
 export class UserDetailsComponent implements OnInit {
   form: UserForm = new UserForm();
   @Input() selectedUser: string;
-  constructor(private userService: UsersService) { }
+  @Output() userUpdated = new EventEmitter<boolean>();
+  constructor(private userService: UsersService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -24,7 +28,10 @@ export class UserDetailsComponent implements OnInit {
 
   updateUser(): void {
     this.userService.updateUser(this.form.convertToModel()).subscribe((response) => {
-      console.log(response);
+      this.snackBar.open('User updated');
+      this.userUpdated.emit(true);
+    }, error => {
+      this.snackBar.open('Couldn\'t update user: ' + error.error.message);
     });
   }
 

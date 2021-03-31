@@ -154,6 +154,10 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
   }
 }
 
+.center-flex {
+  display: flex;
+  justify-content: center;
+}
 
 ::-webkit-scrollbar-track
 {

@@ -14,7 +14,7 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/materia
 
 export const tooltipOptions: MatTooltipDefaultOptions = {
   showDelay: 100,
-  hideDelay: 500,
+  hideDelay: 150,
   touchendHideDelay: 1500,
 };
 

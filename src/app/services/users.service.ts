@@ -26,4 +26,8 @@ export class UsersService {
   createUser(dbUserData: DBUserData): Observable<DBUserData> {
     return this.httpClient.post<DBUserData>('/api/users', dbUserData);
   }
+
+  deleteUser(host: string, username: string): Observable<any> {
+    return this.httpClient.delete<DBUserData>('/api/users', {params: {host, username}});
+  }
 }
