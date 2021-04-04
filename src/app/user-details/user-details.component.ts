@@ -31,7 +31,7 @@ export class UserDetailsComponent implements OnInit {
       this.snackBar.open('User updated');
       this.userUpdated.emit(true);
     }, error => {
-      this.snackBar.open('Couldn\'t update user: ' + error.error.message);
+      this.snackBar.open('Couldn\'t update user: ' + error.error.message, null, {panelClass: 'snack-error'});
     });
   }
 

@@ -1,4 +1,5 @@
 import {ColumnsAndRows} from '../model/ColumnsAndRows';
+import {Pair} from '../model/pair';
 
 export class ResponseMapper {
   static remapAsObjectArray(response: ColumnsAndRows): object[] {
@@ -16,5 +17,15 @@ export class ResponseMapper {
       resultData.push(singleObject);
     }
     return resultData;
+  }
+
+  static objectToArray(obj: object): Pair[] {
+    const keys = Object.keys(obj);
+    const values = Object.values(obj);
+    const result: Pair[] = [];
+    for (let i = 0; i < keys.length; i++) {
+      result.push(new Pair(keys[i], values[i]));
+    }
+    return result;
   }
 }

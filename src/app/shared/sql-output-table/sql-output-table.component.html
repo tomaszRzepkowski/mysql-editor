@@ -1,8 +1,8 @@
-<div *ngIf="outputData">
+<div *ngIf="outputData" class="sql-output-table-container">
   <mat-table [dataSource]="outputData">
     <ng-container *ngFor="let column of outputColumns" [matColumnDef]="column">
-      <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element[column]}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef [matTooltip]="column">{{column}}</mat-header-cell>
+      <mat-cell *matCellDef="let element" [matTooltip]="element[column]">{{element[column]}}</mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="outputColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: outputColumns;" (click)="onRowClick(row);"></mat-row>

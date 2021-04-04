@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {SqlOutputTableModule} from '../shared/sql-output-table/sql-output-table.module';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {SqlOutputTableModule} from '../shared/sql-output-table/sql-output-table.
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
-    SqlOutputTableModule
+    SqlOutputTableModule,
+    MatMenuModule
   ]
 })
 export class SqlEditorModule { }

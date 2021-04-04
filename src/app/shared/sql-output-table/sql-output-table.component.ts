@@ -27,8 +27,7 @@ export class SqlOutputTableComponent implements OnInit {
   }
 
   private updateTableData(): void {
-    console.log(this.columnsAndRows);
-    if (this.columnsAndRows) {
+    if (!!this.columnsAndRows && !!this.columnsAndRows.columns) {
       this.outputColumns = this.columnsAndRows.columns;
       this.outputData = ResponseMapper.remapAsObjectArray(this.columnsAndRows);
     }
@@ -38,5 +37,4 @@ export class SqlOutputTableComponent implements OnInit {
     this.rowClick.emit(row);
   }
 
-  // todo login name password auth type account limits robić pod workbench
 }

@@ -136,7 +136,8 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
       height: 32px;
       font-size: 1rem;
       transition: text-shadow 100ms;
-      cursor: default;
+      //cursor: default;
+      cursor: pointer;
       &:hover {
         text-shadow: 0 1px 1px grey;
       }
@@ -157,6 +158,12 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
 .center-flex {
   display: flex;
   justify-content: center;
+}
+
+.mat-snack-bar-container {
+  &.snack-error {
+    background-color: #c72929;
+  }
 }
 
 ::-webkit-scrollbar-track

@@ -10,7 +10,7 @@
       <mat-card-content>
         <div>
           <div class="box">
-            Current schema: {{currentSchema}}
+            Current schema: {{selectedSchema}}
           </div>
 
           <h3>Schemas</h3>
@@ -27,17 +27,29 @@
           </h3>
           <mat-divider></mat-divider>
           <div class="table-container">
+            <div [matMenuTriggerFor]="contextMenu"
+                 [style.position]="'absolute'"
+                 [style.left.px]="menuX" [style.top.px]="menuY"></div>
+
             <mat-list role="list" *ngIf="availableTables">
-              <div mat-subheader>Available tables in selected schema</div>
-              <mat-list-item role="listitem" *ngFor="let table of availableTables">{{table}}</mat-list-item>
+              <mat-list-item role="listitem" *ngFor="let table of availableTables"
+                             (contextmenu)="handleAuxTableClick($event, table)">{{table}}
+
+              </mat-list-item>
             </mat-list>
             <div *ngIf="!availableTables">
               <mat-label>No tables available in selected schema</mat-label>
             </div>
           </div>
-
         </div>
-
+        <mat-menu #contextMenu="matMenu" hasBackdrop="false">
+          <button mat-menu-item [matMenuTriggerFor]="selectMenu" (click)="executeSelectTable($event)">
+            <span>Select</span>
+          </button>
+          <button mat-menu-item (click)="prepareInsert($event)">
+            <span>Insert row</span>
+          </button>
+        </mat-menu>
       </mat-card-content>
     </mat-card>
   </div>
@@ -65,9 +77,6 @@
     </mat-card>
   </div>
 </div>
-
-
-
 
 <!--<mat-card class="sql-editor-container">-->
 <!--  <mat-card-title>-->
@@ -156,3 +165,26 @@
   </mat-card-content>
 </mat-card>
 
+<mat-menu #selectMenu="matMenu">
+  <button mat-menu-item (click)="executeSelectTable($event, 10)">
+    <span>Select 10</span>
+  </button>
+  <button mat-menu-item (click)="executeSelectTable($event, 100)">
+    <span>Select 100</span>
+  </button>
+  <button mat-menu-item (click)="executeSelectTable($event, 1000)">
+    <span>Select 1000</span>
+  </button>
+</mat-menu>
+
+<!--<ng-template #insertMenu>-->
+<!--  <button mat-menu-item>-->
+<!--    <span>Insert row</span>-->
+<!--  </button>-->
+<!--  <button mat-menu-item>-->
+<!--    <span>Select 100</span>-->
+<!--  </button>-->
+<!--  <button mat-menu-item>-->
+<!--    <span>Select 1000</span>-->
+<!--  </button>-->
+<!--</ng-template>-->

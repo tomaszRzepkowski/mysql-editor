@@ -36,7 +36,7 @@ export const tooltipOptions: MatTooltipDefaultOptions = {
     ],
   providers: [
     {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: tooltipOptions},
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000}}
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 30000}}
   ],
   bootstrap: [AppComponent]
 })
