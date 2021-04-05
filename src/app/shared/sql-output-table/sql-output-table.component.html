@@ -7,10 +7,10 @@
     <mat-header-row *matHeaderRowDef="outputColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: outputColumns;" (click)="onRowClick(row);"></mat-row>
   </mat-table>
-  <div *ngIf="outputData?.length === 0">
-    <h3>No data to display</h3>
+  <div *ngIf="outputColumns.length === 0">
+    <h3>Received 0 rows</h3>
   </div>
 </div>
-<div [hidden]="dataLoaded | async">
+<div *ngIf="!isDataLoaded">
   <h3>No data to display</h3>
 </div>

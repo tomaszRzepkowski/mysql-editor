@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {ColumnsAndRows} from '../model/ColumnsAndRows';
 import {ActionParameters, ActionResponse} from '../model/Actions';
 import {ResponseMapper} from '../shared/response-mapper';
+import {Pair} from '../model/pair';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SqlService {
+  dataLoaded = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,5 +36,9 @@ export class SqlService {
       }
     });
     return this.httpClient.get<ActionResponse>('/api/execute/actions', {params: httpParams});
+  }
+
+  insertSQL(pairs: Pair[]): Observable<any> {
+    return this.httpClient.post<ActionResponse>('/api/execute/insert', pairs);
   }
 }

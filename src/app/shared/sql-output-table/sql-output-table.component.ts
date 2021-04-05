@@ -2,6 +2,7 @@ import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, EventEmitt
 import {Observable, Subject} from 'rxjs';
 import {ColumnsAndRows} from '../../model/ColumnsAndRows';
 import {ResponseMapper} from '../response-mapper';
+import {SqlService} from '../../services/sql.service';
 
 @Component({
   selector: 'app-sql-output-table',
@@ -12,18 +13,17 @@ export class SqlOutputTableComponent implements OnInit {
   @Input() outputData: any[];
   @Input() outputColumns: any[];
   @Input() columnsAndRows: ColumnsAndRows;
-  @Input() dataLoaded: Subject<any>;
   @Output() rowClick: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private sqlService: SqlService) { }
 
   ngOnInit(): void {
-    this.dataLoaded.subscribe(data => {
-      if (data) {
-        this.columnsAndRows = data;
-        this.updateTableData();
-      }
-    });
+    // this.dataLoaded.subscribe(data => {
+    //   if (data) {
+    //     this.updateTableData();
+    //   }
+    // });
+    this.updateTableData();
   }
 
   private updateTableData(): void {
@@ -37,4 +37,12 @@ export class SqlOutputTableComponent implements OnInit {
     this.rowClick.emit(row);
   }
 
+  get dataLoaded(): Subject<boolean> {
+    return this.sqlService.dataLoaded;
+  }
+
+  get isDataLoaded(): boolean {
+    return (!!this.outputData && !!this.outputColumns)
+      || (!!this.columnsAndRows && !!this.columnsAndRows.columns);
+  }
 }

@@ -1,5 +1,6 @@
 import {ColumnsAndRows} from '../model/ColumnsAndRows';
 import {Pair} from '../model/pair';
+import {FormControl} from '@angular/forms';
 
 export class ResponseMapper {
   static remapAsObjectArray(response: ColumnsAndRows): object[] {
@@ -25,6 +26,17 @@ export class ResponseMapper {
     const result: Pair[] = [];
     for (let i = 0; i < keys.length; i++) {
       result.push(new Pair(keys[i], values[i]));
+    }
+    return result;
+  }
+
+  static formControlToArray(obj: object): Pair[] {
+    const keys = Object.keys(obj);
+    const values = Object.values(obj);
+    const result: Pair[] = [];
+    for (let i = 0; i < keys.length; i++) {
+      const val = values[i] as FormControl;
+      result.push(new Pair(keys[i], val.value));
     }
     return result;
   }

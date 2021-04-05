@@ -1,0 +1,15 @@
+.table-list {
+  .table-more {
+    width: 100%;
+    background-color: #eeeeee;
+    padding: 0 10px 5px;
+  }
+  .collapsed {
+    height: 0;
+    opacity: 0;
+    display: none;
+  }
+  .expanded {
+    height: auto;
+  }
+}

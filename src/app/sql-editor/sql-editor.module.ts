@@ -15,10 +15,14 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {SqlOutputTableModule} from '../shared/sql-output-table/sql-output-table.module';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatTreeModule} from '@angular/material/tree';
+import { SqlTableTreeComponent } from './sql-table-tree/sql-table-tree.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {SqlInputTableModule} from '../shared/sql-input-table/sql-input-table.module';
 
 
 @NgModule({
-  declarations: [SqlEditorComponent],
+  declarations: [SqlEditorComponent, SqlTableTreeComponent],
   imports: [
     CommonModule,
     SqlEditorRoutingModule,
@@ -34,7 +38,10 @@ import {MatMenuModule} from '@angular/material/menu';
     MatTooltipModule,
     MatIconModule,
     SqlOutputTableModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTreeModule,
+    MatDialogModule,
+    SqlInputTableModule
   ]
 })
 export class SqlEditorModule { }

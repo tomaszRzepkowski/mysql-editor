@@ -3,13 +3,14 @@ import {FormControl} from '@angular/forms';
 import {SqlService} from '../services/sql.service';
 import {InfoService} from '../services/info.service';
 import {MatSelectChange} from '@angular/material/select';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {ColumnsAndRows} from '../model/ColumnsAndRows';
 import {ResponseMapper} from '../shared/response-mapper';
 import {ActionParameters, ActionResponse, TableActions} from '../model/Actions';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
+import {MatMenuTrigger} from '@angular/material/menu';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sql-editor',
@@ -25,9 +26,12 @@ export class SqlEditorComponent implements OnInit {
   selectedSchema: string;
   selectedTable: string;
   errorMessages: string = null;
-  menuX = 0;
-  menuY = 0;
-  dataLoaded = new BehaviorSubject<boolean>(false);
+  schemaControl = new FormControl(null);
+  // menuX = 0;
+  // menuY = 0;
+  // dataLoaded = new BehaviorSubject<boolean>(false);
+
+  // TREE
 
   @ViewChild(MatMenuTrigger) menu: MatMenuTrigger;
 
@@ -42,7 +46,8 @@ export class SqlEditorComponent implements OnInit {
 
     this.infoService.getCurrentSchema().subscribe((data) => {
       this.selectedSchema = data;
-      console.log(this.selectedSchema);
+      this.schemaControl.setValue(this.selectedSchema);
+      this.fetchTables(this.selectedSchema);
     });
   }
 
@@ -52,7 +57,7 @@ export class SqlEditorComponent implements OnInit {
   controlEnterPress(): void {
     const userEntry = this.editorText.value;
     this.sqlService.executeSQL(userEntry)
-      .pipe(finalize(() => this.dataLoaded.next(true)))
+      .pipe(finalize(() => this.sqlService.dataLoaded.next(true)))
       .subscribe((response: ColumnsAndRows) => {
         this.resolveData(response);
     }, (err) => {
@@ -63,10 +68,8 @@ export class SqlEditorComponent implements OnInit {
   }
 
   selectSchema($event: MatSelectChange): void {
-    console.log($event.value);
     const schemaName = $event.value;
     this.infoService.selectSchema(schemaName).subscribe(() => {
-      console.log('Schema selected');
       this.selectedSchema = schemaName;
       this.fetchTables(schemaName);
     });
@@ -75,13 +78,10 @@ export class SqlEditorComponent implements OnInit {
   private resolveData(response: ColumnsAndRows): void {
     this.outputColumns = response.columns.slice();
     this.outputData = ResponseMapper.remapAsObjectArray(response);
-    console.log(this.outputColumns);
-    console.log(this.outputData);
   }
 
   private fetchTables(schemaName: string): void {
     this.infoService.getTables(schemaName).subscribe((data: ColumnsAndRows) => {
-      console.log(data.rows);
       this.availableTables = data.rows;
     });
   }
@@ -90,37 +90,37 @@ export class SqlEditorComponent implements OnInit {
     this.outputColumns = null;
     this.outputData = null;
     this.errorMessages = null;
-    this.dataLoaded.next(false);
+    this.sqlService.dataLoaded.next(false);
   }
 
   handleAuxTableClick($event: MouseEvent, table: string): void {
-    $event.stopPropagation();
-    $event.preventDefault();
-    this.selectedTable = table;
-    this.menuX = $event.x;
-    this.menuY = $event.y;
-    this.menu.closeMenu();
-    this.menu.openMenu();
+    // $event.stopPropagation();
+    // $event.preventDefault();
+    // this.selectedTable = table;
+    // this.menuX = $event.x;
+    // this.menuY = $event.y;
+    // this.menu.closeMenu();
+    // this.menu.openMenu();
   }
 
-  executeSelectTable($event: MouseEvent, limit?: number, orderBy?: string): void {
-    const parameters = new ActionParameters();
-    parameters.schema = this.selectedSchema;
-    parameters.table = this.selectedTable;
-    parameters.action = TableActions.SELECT;
-    parameters.limit = limit ?? undefined;
-    parameters.orderBy = orderBy ?? undefined;
-    this.sqlService.executeSQLAction(parameters)
-      .pipe(finalize(() => this.dataLoaded.next(true)))
-      .subscribe((response: ActionResponse) => {
-        this.resolveData(response.columnsAndRows);
-        this.setEditorText(response.sql);
-        this.snackBar.open('Success');
-      }, error => {
-        this.snackBar.open('', null, {panelClass: 'snack-error'});
-    });
-    this.menu.closeMenu();
-  }
+  // executeSelectTable($event: MouseEvent, limit?: number, orderBy?: string): void {
+  //   const parameters = new ActionParameters();
+  //   parameters.schema = this.selectedSchema;
+  //   parameters.table = this.selectedTable;
+  //   parameters.action = TableActions.SELECT;
+  //   parameters.limit = limit ?? undefined;
+  //   parameters.orderBy = orderBy ?? undefined;
+  //   this.sqlService.executeSQLAction(parameters)
+  //     .pipe(finalize(() => this.dataLoaded.next(true)))
+  //     .subscribe((response: ActionResponse) => {
+  //       this.resolveData(response.columnsAndRows);
+  //       this.setEditorText(response.sql);
+  //       this.snackBar.open('Success');
+  //     }, error => {
+  //       this.snackBar.open('', null, {panelClass: 'snack-error'});
+  //   });
+  //   this.menu.closeMenu();
+  // }
 
   handleSelectTable($event: MouseEvent, table: string): void {
     // const parameters = new ActionParameters();
@@ -145,5 +145,21 @@ export class SqlEditorComponent implements OnInit {
 
   prepareInsert($event: MouseEvent): void {
     console.log();
+  }
+
+  executeTableSelect(params: ActionParameters): void {
+    this.sqlService.executeSQLAction(params)
+      .pipe(finalize(() => this.sqlService.dataLoaded.next(true)))
+      .subscribe((response: ActionResponse) => {
+        this.resolveData(response.columnsAndRows);
+        this.setEditorText(response.sql);
+        this.snackBar.open('Success');
+      }, error => {
+        this.snackBar.open('', null, {panelClass: 'snack-error'});
+      });
+  }
+
+  get dataLoaded(): Subject<boolean> {
+    return this.sqlService.dataLoaded;
   }
 }

@@ -1,0 +1,87 @@
+<div style="overflow: auto; max-height: 300px;">
+  <div [matMenuTriggerFor]="contextMenu"
+       [style.position]="'fixed'"
+       [style.left.px]="menuX" [style.top.px]="menuY"></div>
+  <mat-list role="list" *ngIf="availableTables" class="table-list">
+    <div *ngFor="let table of availableTables">
+      <mat-list-item role="listitem"
+                     (contextmenu)="handleAuxTableClick($event, table)"
+                     (click)="toggleMore(moreAboutTable)">{{table}}</mat-list-item>
+      <div #moreAboutTable class="table-more collapsed">
+        <mat-list role="list">
+          <mat-list-item role="listitem" (click)="showColumnsForTable(table);">
+            Columns
+          </mat-list-item>
+        </mat-list>
+        <mat-list role="list">
+          <mat-list-item role="listitem" (click)="showIndexesForTable(table);">
+            Indexes
+          </mat-list-item>
+        </mat-list>
+        <mat-list role="list">
+          <mat-list-item role="listitem" (click)="showTriggersForTable();">
+            Triggers
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </mat-list>
+  <div *ngIf="!availableTables">
+    <mat-label>No tables available in selected schema</mat-label>
+  </div>
+
+  <mat-menu #contextMenu="matMenu" hasBackdrop="true">
+    <button mat-menu-item [matMenuTriggerFor]="selectMenu" (click)="executeSelectTable($event)">
+      <span>Select</span>
+    </button>
+    <button mat-menu-item (click)="prepareInsert($event)">
+      <span>Insert row</span>
+    </button>
+  </mat-menu>
+
+  <mat-menu #selectMenu="matMenu">
+    <button mat-menu-item (click)="executeSelectTable($event, 10)">
+      <span>Select 10</span>
+    </button>
+    <button mat-menu-item (click)="executeSelectTable($event, 100)">
+      <span>Select 100</span>
+    </button>
+    <button mat-menu-item (click)="executeSelectTable($event, 1000)">
+      <span>Select 1000</span>
+    </button>
+  </mat-menu>
+  </div>
+
+<ng-template #columnsDialog>
+  <mat-card-title>
+    Columns
+  </mat-card-title>
+  <mat-dialog-content>
+    <app-sql-output-table [columnsAndRows]="columnsSource"></app-sql-output-table>
+  </mat-dialog-content>
+</ng-template>
+<ng-template #indexesDialog>
+  <mat-card-title>
+    Indexes
+  </mat-card-title>
+  <mat-dialog-content>
+    <app-sql-output-table [columnsAndRows]="indexesSource"></app-sql-output-table>
+  </mat-dialog-content>
+</ng-template>
+<ng-template #triggersDialog>
+  <mat-card-title>
+    Triggers
+  </mat-card-title>
+  <mat-dialog-content>
+    <app-sql-output-table [columnsAndRows]="triggerSource"></app-sql-output-table>
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #insertDialog>
+  <mat-card-title>
+    Insert
+  </mat-card-title>
+  <mat-dialog-content>
+    <app-sql-input-table [columns]="columnsForInsert" (formSubmit)="executeInsert($event);"></app-sql-input-table>
+  </mat-dialog-content>
+</ng-template>
