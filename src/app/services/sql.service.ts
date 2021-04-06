@@ -38,7 +38,7 @@ export class SqlService {
     return this.httpClient.get<ActionResponse>('/api/execute/actions', {params: httpParams});
   }
 
-  insertSQL(pairs: Pair[]): Observable<any> {
-    return this.httpClient.post<ActionResponse>('/api/execute/insert', pairs);
+  insertSQL(schema: string, table: string, pairs: Pair[]): Observable<any> {
+    return this.httpClient.post<ActionResponse>('/api/execute/insert', pairs, {params: {schema, table}});
   }
 }

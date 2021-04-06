@@ -5,7 +5,7 @@ import {MatMenuTrigger} from '@angular/material/menu';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SqlService} from '../../services/sql.service';
 import {ColumnsAndRows} from '../../model/ColumnsAndRows';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Pair} from '../../model/pair';
 
 @Component({
@@ -24,6 +24,7 @@ export class SqlTableTreeComponent implements OnInit {
   @ViewChild('triggersDialog') triggersDialog: TemplateRef<any>;
   @ViewChild('indexesDialog') indexesDialog: TemplateRef<any>;
   @ViewChild('insertDialog') insertDialog: TemplateRef<any>;
+  insertDialogRef: MatDialogRef<any>;
   @Output() executeSelect = new EventEmitter<ActionParameters>();
   columnsSource: ColumnsAndRows;
   triggerSource: ColumnsAndRows;
@@ -45,8 +46,6 @@ export class SqlTableTreeComponent implements OnInit {
 
   showColumnsForTable(table: string): void  {
     this.infoService.getColumns(this.selectedSchema, table).subscribe(data => {
-      // this.dialog.open();
-      console.log(data);
       this.columnsSource = {...data};
       this.dialog.open(this.columnsDialog);
     });
@@ -83,7 +82,7 @@ export class SqlTableTreeComponent implements OnInit {
     this.selectedTable = table;
     this.menuX = $event.clientX;
     this.menuY = $event.clientY;
-    console.log($event);
+    // console.log($event);
     // console.log(this.menuX);
     // console.log(this.menuY);
     this.menu.closeMenu();
@@ -98,16 +97,10 @@ export class SqlTableTreeComponent implements OnInit {
     });
   }
 
-  hideMenu(): void {
-    console.log('blur');
-    this.menu.closeMenu();
-
-  }
-
   executeInsert(pairs: Pair[]): void {
-    console.log(pairs);
-    this.sqlService.insertSQL(pairs).subscribe(() => {
-      console.log("INSERTED");
+    this.sqlService.insertSQL(this.selectedSchema, this.selectedTable[0], pairs).subscribe(() => {
+      this.snackBar.open('Insert successful');
+      this.insertDialogRef.close();
     }, error => {
       this.snackBar.open(error.error.message, null, {panelClass: 'snack-error'});
     });

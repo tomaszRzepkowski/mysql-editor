@@ -29,7 +29,6 @@ export class NewUserComponent implements OnInit {
       this.userCreated.emit(true);
     }, (error) => {
       this.snackBar.open('Couldn\'t create user: ' + error.error.message);
-      // todo make error class for the snack bar
     });
   }
   convertToModel(): DBUserData {
