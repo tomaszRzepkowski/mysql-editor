@@ -29,7 +29,7 @@ export class SqlTableTreeComponent implements OnInit {
   columnsSource: ColumnsAndRows;
   triggerSource: ColumnsAndRows;
   indexesSource: ColumnsAndRows;
-  columnsForInsert: string[];
+  columnsForInsert: ColumnsAndRows;
 
   constructor(private infoService: InfoService,
               private sqlService: SqlService,
@@ -91,8 +91,7 @@ export class SqlTableTreeComponent implements OnInit {
 
   prepareInsert($event: MouseEvent): void  {
     this.infoService.getColumns(this.selectedSchema, this.selectedTable[0]).subscribe(data => {
-      this.columnsForInsert = data.rows.map(col => col[0]);
-      // todo tutaj warto wziac po nazwie, wypisac typ i zy klucz np.
+      this.columnsForInsert = data;
       this.dialog.open(this.insertDialog);
     });
   }

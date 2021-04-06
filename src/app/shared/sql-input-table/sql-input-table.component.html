@@ -1,15 +1,20 @@
 <div class="sql-input-table-container">
   <mat-table [dataSource]="[formGroup.controls]">
-    <ng-container *ngFor="let column of columns" [matColumnDef]="column">
-      <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
+    <ng-container *ngFor="let column of columnNames" [matColumnDef]="column">
+      <mat-header-cell *matHeaderCellDef>
+        {{column}}
+        <mat-icon color="primary" [matTooltip]="datatypes.get(column)">info</mat-icon>
+      </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <input matInput [formControl]="element[column]" autocomplete="off">
       </mat-cell>
     </ng-container>
-    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnNames;"></mat-row>
   </mat-table>
 </div>
-<button mat-flat-button color="primary" type="button" (click)="submitInsert()">
-  Insert
-</button>
+<div class="margin-over">
+  <button mat-flat-button color="primary" type="button" (click)="submitInsert()">
+    Insert
+  </button>
+</div>

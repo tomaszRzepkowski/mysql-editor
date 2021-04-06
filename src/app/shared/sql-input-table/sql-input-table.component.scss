@@ -1,0 +1,27 @@
+.mat-row {
+  &:hover {
+    cursor: pointer;
+    background-color: #e0e0e0;
+    text-shadow: 0 0 1px #505050;
+  }
+  .mat-cell {
+    padding-right: 20px;
+  }
+}
+
+.mat-header-row {
+  .mat-header-cell {
+    padding-right: 20px;
+    .mat-icon {
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      margin-left: 4px;
+    }
+  }
+}
+
+.sql-input-table-container {
+  display: flex;
+  overflow: auto;
+}
