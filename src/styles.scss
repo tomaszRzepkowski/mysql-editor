@@ -94,6 +94,17 @@ body { font-size: 1rem !important; margin: 0; font-family: 'Montserrat', sans-se
   margin-top: 10px;
 }
 
+.ellipsis {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
 .content-wrapper {
   padding: 10px 10px 0 10px;
   margin: 5px 5px 0 5px;

@@ -60,6 +60,10 @@ export class UserDetailsComponent implements OnInit {
     this.form.createUserPrivilege.setValue(userData.createUserPrivilege);
     this.form.eventPrivilege.setValue(userData.eventPrivilege);
   }
+
+  cancel(): void {
+    this.userUpdated.emit(false);
+  }
 }
 
 export class UserForm {

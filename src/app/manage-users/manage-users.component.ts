@@ -72,7 +72,13 @@ export class ManageUsersComponent implements OnInit {
     });
   }
 
-  finishUserUpdate(): void {
+  finishUserUpdate($event: boolean): void {
+    this.refreshUsersList();
+    this.selectedUser = null;
+  }
+
+  handleUserCreated($event: boolean): void {
+    this.newUser = false;
     this.refreshUsersList();
     this.selectedUser = null;
   }

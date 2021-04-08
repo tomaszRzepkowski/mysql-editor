@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {SqlOutputTableComponent} from './sql-output-table.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 
 
@@ -14,7 +15,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     imports: [
         CommonModule,
         MatTableModule,
-        MatTooltipModule
+        MatTooltipModule,
+        ClipboardModule
     ]
 })
 export class SqlOutputTableModule { }

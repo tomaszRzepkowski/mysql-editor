@@ -5,25 +5,24 @@
   <mat-list role="list" *ngIf="availableTables" class="table-list">
     <div *ngFor="let table of availableTables">
       <mat-list-item role="listitem"
-                     (contextmenu)="handleAuxTableClick($event, table)"
-                     (click)="toggleMore(moreAboutTable)">{{table}}</mat-list-item>
-      <div #moreAboutTable class="table-more collapsed">
-        <mat-list role="list">
-          <mat-list-item role="listitem" (click)="showColumnsForTable(table);">
-            Columns
-          </mat-list-item>
-        </mat-list>
-        <mat-list role="list">
-          <mat-list-item role="listitem" (click)="showIndexesForTable(table);">
-            Indexes
-          </mat-list-item>
-        </mat-list>
-        <mat-list role="list">
-          <mat-list-item role="listitem" (click)="showTriggersForTable();">
-            Triggers
-          </mat-list-item>
-        </mat-list>
-      </div>
+                     (contextmenu)="handleAuxTableClick($event, table)">{{table}}</mat-list-item>
+<!--      <div #moreAboutTable class="table-more collapsed">-->
+<!--        <mat-list role="list">-->
+<!--          <mat-list-item role="listitem" (click)="showColumnsForTable(table);">-->
+<!--            Columns-->
+<!--          </mat-list-item>-->
+<!--        </mat-list>-->
+<!--        <mat-list role="list">-->
+<!--          <mat-list-item role="listitem" (click)="showIndexesForTable(table);">-->
+<!--            Indexes-->
+<!--          </mat-list-item>-->
+<!--        </mat-list>-->
+<!--        <mat-list role="list">-->
+<!--          <mat-list-item role="listitem" (click)="showTriggersForTable();">-->
+<!--            Triggers-->
+<!--          </mat-list-item>-->
+<!--        </mat-list>-->
+<!--      </div>-->
     </div>
   </mat-list>
   <div *ngIf="!availableTables">
@@ -36,6 +35,18 @@
     </button>
     <button mat-menu-item (click)="prepareInsert($event)">
       <span>Insert row</span>
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="tableMenu">
+      <span>Table</span>
+    </button>
+    <button mat-menu-item (click)="showViews($event)">
+      <span>Views</span>
+    </button>
+    <button mat-menu-item (click)="showProcedures($event)">
+      <span>Stored procedures</span>
+    </button>
+    <button mat-menu-item (click)="showFunctions($event)">
+      <span>Functions</span>
     </button>
   </mat-menu>
 
@@ -50,30 +61,45 @@
       <span>Select 1000</span>
     </button>
   </mat-menu>
+
+  <mat-menu #tableMenu="matMenu">
+    <button mat-menu-item (click)="showColumnsForTable($event)">
+      <span>Columns</span>
+    </button>
+    <button mat-menu-item (click)="showIndexesForTable($event)">
+      <span>Indexes</span>
+    </button>
+    <button mat-menu-item (click)="showTriggersForTable($event)">
+      <span>Triggers</span>
+    </button>
+  </mat-menu>
   </div>
 
 <ng-template #columnsDialog>
-  <mat-card-title>
-    Columns
-  </mat-card-title>
-  <mat-dialog-content>
-    <app-sql-output-table [columnsAndRows]="columnsSource"></app-sql-output-table>
-  </mat-dialog-content>
+  <ng-container [ngTemplateOutlet]="outputDialog" [ngTemplateOutletContext]="{source: columnsSource, label: 'Columns'}"></ng-container>
 </ng-template>
 <ng-template #indexesDialog>
-  <mat-card-title>
-    Indexes
-  </mat-card-title>
-  <mat-dialog-content>
-    <app-sql-output-table [columnsAndRows]="indexesSource"></app-sql-output-table>
-  </mat-dialog-content>
+  <ng-container [ngTemplateOutlet]="outputDialog" [ngTemplateOutletContext]="{source: indexesSource, label: 'Indexes'}"></ng-container>
 </ng-template>
 <ng-template #triggersDialog>
+  <ng-container [ngTemplateOutlet]="outputDialog" [ngTemplateOutletContext]="{source: triggerSource, label: 'Triggers'}"></ng-container>
+</ng-template>
+<ng-template #viewsDialog>
+  <ng-container [ngTemplateOutlet]="outputDialog" [ngTemplateOutletContext]="{source: viewsSource, label: 'Views'}"></ng-container>
+</ng-template>
+<ng-template #functionsDialog>
+  <ng-container [ngTemplateOutlet]="outputDialog" [ngTemplateOutletContext]="{source: functionsSource, label: 'Functions'}"></ng-container>
+</ng-template>
+<ng-template #proceduresDialog>
+  <ng-container [ngTemplateOutlet]="outputDialog" [ngTemplateOutletContext]="{source: proceduresSource, label: 'Procedures'}"></ng-container>
+</ng-template>
+
+<ng-template #outputDialog let-label="label" let-source="source">
   <mat-card-title>
-    Triggers
+    {{label}}
   </mat-card-title>
   <mat-dialog-content>
-    <app-sql-output-table [columnsAndRows]="triggerSource"></app-sql-output-table>
+    <app-sql-output-table [columnsAndRows]="source"></app-sql-output-table>
   </mat-dialog-content>
 </ng-template>
 

@@ -2,7 +2,12 @@
   <mat-table [dataSource]="outputData">
     <ng-container *ngFor="let column of outputColumns" [matColumnDef]="column">
       <mat-header-cell *matHeaderCellDef [matTooltip]="column">{{column}}</mat-header-cell>
-      <mat-cell *matCellDef="let element" [matTooltip]="element[column]">{{element[column]}}</mat-cell>
+      <mat-cell *matCellDef="let element" [matTooltip]="element[column]" [style.max-width.px]="300"
+                (click)="copyToClipboard(element[column]);">
+        <span class="ellipsis">
+            {{element[column]}}
+        </span>
+      </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="outputColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: outputColumns;" (click)="onRowClick(row);"></mat-row>

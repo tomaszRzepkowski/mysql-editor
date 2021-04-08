@@ -7,7 +7,7 @@
   </mat-card-subtitle>
   <div [hidden]="newUser">
     <mat-card-content>
-      <button (click)="createUser()" mat-flat-button color="primary">Create user</button>
+      <button (click)="createUser()" mat-flat-button color="primary" [disabled]="selectedUser">Create user</button>
       <div *ngIf="outputData">
         <mat-table [dataSource]="outputData">
           <ng-container *ngFor="let column of outputColumns" [matColumnDef]="column">
@@ -40,7 +40,7 @@
       User details
     </mat-card-title>
     <mat-card-content>
-      <app-user-details #userDetailsComponent [selectedUser]="selectedUser" (userUpdated)="finishUserUpdate();"></app-user-details>
+      <app-user-details #userDetailsComponent [selectedUser]="selectedUser" (userUpdated)="finishUserUpdate($event);"></app-user-details>
     </mat-card-content>
   </div>
   <div *ngIf="newUser">
@@ -48,7 +48,7 @@
       New user
     </mat-card-title>
     <mat-card-content>
-      <app-new-user #newUserComponent (userCreated)="newUser = false;"></app-new-user>
+      <app-new-user #newUserComponent (userCreated)="handleUserCreated($event);"></app-new-user>
     </mat-card-content>
   </div>
 </mat-card>

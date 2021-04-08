@@ -38,4 +38,8 @@ export class NewUserComponent implements OnInit {
     data.password = this.password.value;
     return data;
   }
+
+  cancel(): void {
+    this.userCreated.emit(false);
+  }
 }

@@ -23,12 +23,18 @@ export class SqlTableTreeComponent implements OnInit {
   @ViewChild('columnsDialog') columnsDialog: TemplateRef<any>;
   @ViewChild('triggersDialog') triggersDialog: TemplateRef<any>;
   @ViewChild('indexesDialog') indexesDialog: TemplateRef<any>;
+  @ViewChild('proceduresDialog') proceduresDialog: TemplateRef<any>;
+  @ViewChild('functionsDialog') functionsDialog: TemplateRef<any>;
+  @ViewChild('viewsDialog') viewsDialog: TemplateRef<any>;
   @ViewChild('insertDialog') insertDialog: TemplateRef<any>;
   insertDialogRef: MatDialogRef<any>;
   @Output() executeSelect = new EventEmitter<ActionParameters>();
   columnsSource: ColumnsAndRows;
   triggerSource: ColumnsAndRows;
   indexesSource: ColumnsAndRows;
+  viewsSource: ColumnsAndRows;
+  proceduresSource: ColumnsAndRows;
+  functionsSource: ColumnsAndRows;
   columnsForInsert: ColumnsAndRows;
 
   constructor(private infoService: InfoService,
@@ -39,26 +45,26 @@ export class SqlTableTreeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toggleMore(moreAboutTable: HTMLDivElement): void  {
-    moreAboutTable.className === 'table-more collapsed' ? moreAboutTable.className = 'table-more expanded' : moreAboutTable.className = 'table-more collapsed';
-    console.log(moreAboutTable.className);
-  }
+  // toggleMore(moreAboutTable: HTMLDivElement): void  {
+  //   moreAboutTable.className === 'table-more collapsed' ? moreAboutTable.className = 'table-more expanded' : moreAboutTable.className = 'table-more collapsed';
+  //   console.log(moreAboutTable.className);
+  // }
 
-  showColumnsForTable(table: string): void  {
-    this.infoService.getColumns(this.selectedSchema, table).subscribe(data => {
+  showColumnsForTable($event: MouseEvent): void  {
+    this.infoService.getColumns(this.selectedSchema, this.selectedTable[0]).subscribe(data => {
       this.columnsSource = {...data};
       this.dialog.open(this.columnsDialog);
     });
   }
 
-  showIndexesForTable(table: string): void  {
-    this.infoService.getIndexes(this.selectedSchema, table).subscribe(data => {
+  showIndexesForTable($event: MouseEvent): void  {
+    this.infoService.getIndexes(this.selectedSchema, this.selectedTable[0]).subscribe(data => {
       this.indexesSource = {...data};
       this.dialog.open(this.indexesDialog);
     });
   }
 
-  showTriggersForTable(): void  {
+  showTriggersForTable($event: MouseEvent): void  {
     this.infoService.getTriggers(this.selectedSchema).subscribe(data => {
       this.triggerSource = {...data};
       this.dialog.open(this.triggersDialog);
@@ -103,5 +109,29 @@ export class SqlTableTreeComponent implements OnInit {
     }, error => {
       this.snackBar.open(error.error.message, null, {panelClass: 'snack-error'});
     });
+  }
+
+  showViews($event: MouseEvent): void {
+    console.log('views');
+    this.infoService.getViews(this.selectedSchema).subscribe(data => {
+      this.viewsSource = {...data};
+      this.dialog.open(this.viewsDialog);
+    });
+  }
+
+  showProcedures($event: MouseEvent): void {
+    this.infoService.getProcedures(this.selectedSchema).subscribe(data => {
+      this.proceduresSource = {...data};
+      this.dialog.open(this.proceduresDialog);
+    });
+
+  }
+
+  showFunctions($event: MouseEvent): void {
+    this.infoService.getFunctions(this.selectedSchema).subscribe(data => {
+      this.functionsSource = {...data};
+      this.dialog.open(this.functionsDialog);
+    });
+
   }
 }
